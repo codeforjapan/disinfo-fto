@@ -11,7 +11,7 @@
 	};
 </script>
 
-<div class="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+<div class="flex flex-col space-y-3 min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
 	<div class="w-full max-w-md space-y-8">
 		<div>
 			<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Input URL</h2>
@@ -63,18 +63,28 @@
 			</div>
 		</form>
 
-		{#if form}
-			{#if form.success}
-				<div class="border-2 border-gray-300 p-4">
-					{JSON.stringify(form.data)}
-				</div>
-				{#each form.posts as post}
-					<PostCard {post} />
-				{/each}
-				{#each form.notes as note}
-					<NoteCard {note} />
-				{/each}
-			{/if}
-		{/if}
 	</div>
+
+    {#if form}
+        {#if form.success}
+            <p class="mr-auto">JSON.stringify(form.data)</p>
+            <div class="border-2 border-gray-300 p-4 w-full">
+                {JSON.stringify(form.data)}
+            </div>
+            <div class="flex space-x-3 flex-col sm:flex-row">
+                <div class="flex flex-col space-y-2 w-full sm:w-1/2">
+                    <h2 class="text-2xl font-semibold text-gray-800">Posts</h2>
+                    {#each form.posts as post}
+                        <PostCard {post} />
+                    {/each}
+                </div>
+                <div class="flex flex-col space-y-2 w-full sm:w-1/2">
+                    <h2 class="text-2xl font-semibold text-gray-800">Notes</h2>
+                    {#each form.notes as note}
+                        <NoteCard {note} />
+                    {/each}
+                </div>
+            </div>
+        {/if}
+    {/if}
 </div>
