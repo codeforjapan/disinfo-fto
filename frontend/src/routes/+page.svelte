@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import NoteCard from './NoteCard.svelte';
+	import PostCard from './PostCard.svelte';
 
 	export let form;
 
@@ -62,7 +64,17 @@
 		</form>
 
 		{#if form}
-			{JSON.stringify(form)}
+			{#if form.success}
+				<div class="border-2 border-gray-300 p-4">
+					{JSON.stringify(form.data)}
+				</div>
+				{#each form.posts as post}
+					<PostCard {post} />
+				{/each}
+				{#each form.notes as note}
+					<NoteCard {note} />
+				{/each}
+			{/if}
 		{/if}
 	</div>
 </div>
