@@ -1,3 +1,5 @@
+import type { Post } from '$lib/types';
+
 const BIRDXPLORER_API_URL = 'https://birdxplorer.onrender.com';
 const POST_PATH = '/api/v1/data/posts';
 
@@ -18,24 +20,24 @@ async function extractUrlsFromTweetUrl(tweetUrl: string): Promise<string[]> {
 type PostWithUrl = {
 	url: string;
 	/** The post that contains the url */
-	post: any;
+	post: Post;
 };
 
 export default async function getDataFromTweetUrl(url: string): Promise<PostWithUrl[]> {
 	const urls = await extractUrlsFromTweetUrl(url);
 
-	return Promise.all(
+	return (await Promise.all(
 		urls.map(async (url) => {
 			const payload = {
 				search_text: url
 			};
-			const posts = await (await fetch(
+			const postsData: Post[] = (await (await fetch(
 				`${BIRDXPLORER_API_URL}${POST_PATH}?${new URLSearchParams(payload)}`,
 				{
 					method: 'GET'
 				}
-			)).json();
-			return posts.map((post) => ({ url, post }));
+			)).json()).data;
+			return postsData.map((post) => ({ url, post }));
 		})
-	);
+	)).flat();
 }
