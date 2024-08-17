@@ -6,8 +6,7 @@
 		topics: {
 			topicId: number;
 			label: {
-				ja: string;
-				en: string;
+				[language: string]: string;
 			};
 			referenceCount: number;
 		}[];
@@ -56,10 +55,10 @@
 			</div>
 		</div>
 
-		<p class="mb-4 text-gray-700">{note.summary}</p>
+		<p class="mb-4 whitespace-pre-line text-gray-700">{note.summary}</p>
 
 		<div class="mb-4">
-			<h3 class="mb-2 text-sm font-semibold text-gray-600">トピック</h3>
+			<h3 class="mb-2 text-sm font-semibold text-gray-600">Topic</h3>
 			<div class="flex flex-wrap gap-2">
 				{#each note.topics as topic (topic.topicId)}
 					<span
@@ -77,7 +76,7 @@
 								clip-rule="evenodd"
 							/>
 						</svg>
-						{topic.label.ja}
+						{topic.label[Object.keys(topic.label)[0]]}
 					</span>
 				{/each}
 			</div>

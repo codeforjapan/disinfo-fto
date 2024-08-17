@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<p class="mb-4 text-gray-700">{post.text}</p>
+		<p class="mb-4 text-gray-700 whitespace-pre-line">{post.text}</p>
 
 		{#if post.mediaDetails && post.mediaDetails.length > 0}
 			<div class="mb-4 grid grid-cols-2 gap-2">
