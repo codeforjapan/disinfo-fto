@@ -6,7 +6,7 @@
 	export let form;
 
 	const validateUrl = (url: string): boolean => {
-		const regex = /^https:\/\/(twitter|x)\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+$/;
+        const regex = /^https:\/\/(twitter|x)\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+/;
 		return regex.test(url);
 	};
 </script>
@@ -23,9 +23,10 @@
                 // https://kit.svelte.dev/docs/form-actions#progressive-enhancement-customising-use-enhance
 
 				if (!validateUrl(String(formData.get('url')))) {
-					cancel();
-					alert('Invalid URL');
-					return;
+                    if (!confirm('This URL may be invalid. Do you want to continue?')) {
+                        cancel();
+                        return;
+                    }
 				}
 				return async ({ result, update }) => {
 					if (result.type === 'success') {
