@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Community Notes Checker Extension",
+  "name": "URL Checker Extension",
   "version": "1.0",
   "description": "Checks URLs against example.com/search and modifies the page",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "webNavigation"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -16,7 +17,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_start"
     }
   ]
 }
