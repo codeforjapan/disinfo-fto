@@ -1,5 +1,12 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+
 	export let form;
+
+	const validateUrl = (url: string): boolean => {
+		const regex = /^https:\/\/(twitter|x)\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+$/;
+		return regex.test(url);
+	};
 </script>
 
 <div class="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
@@ -7,7 +14,29 @@
 		<div>
 			<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Input URL</h2>
 		</div>
-		<form method="post" class="mt-8 space-y-6">
+		<form
+			method="post"
+			class="mt-8 space-y-6"
+			use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+                // https://kit.svelte.dev/docs/form-actions#progressive-enhancement-customising-use-enhance
+
+				if (!validateUrl(String(formData.get('url')))) {
+					cancel();
+					alert('Invalid URL');
+					return;
+				}
+				return async ({ result, update }) => {
+					if (result.type === 'success') {
+						update({
+                            // input url won't be cleared
+							reset: false
+						});
+					} else if (result.type === 'error' || result.type === 'failure') {
+						alert('error');
+					}
+				};
+			}}
+		>
 			<div class="-space-y-px rounded-md shadow-sm">
 				<div>
 					<label for="url" class="sr-only">URL</label>
@@ -27,7 +56,7 @@
 					type="submit"
 					class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 				>
-					送信
+					Submit
 				</button>
 			</div>
 		</form>
