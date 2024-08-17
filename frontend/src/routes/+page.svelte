@@ -13,6 +13,9 @@
 
 <div class="flex flex-col space-y-3 min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
 	<div class="w-full max-w-md space-y-8">
+        <h1 class="text-4xl font-extrabold text-gray-900 text-center">
+            BirdXplorer
+        </h1>
 		<div>
 			<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Input URL</h2>
 		</div>
