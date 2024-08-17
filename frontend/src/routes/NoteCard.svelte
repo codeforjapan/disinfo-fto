@@ -1,19 +1,5 @@
 <script lang="ts">
-	export let note: {
-		noteId: string;
-		postId: string;
-		language: string;
-		topics: {
-			topicId: number;
-			label: {
-				[language: string]: string;
-			};
-			referenceCount: number;
-		}[];
-		summary: string;
-		createdAt: number;
-	};
-
+	export let note: Note;
 	function formatDate(timestamp: number) {
 		const date = new Date(timestamp);
 		return date.toLocaleDateString();

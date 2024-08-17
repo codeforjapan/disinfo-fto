@@ -1,21 +1,5 @@
 <script lang="ts">
-	export let post: {
-		postId: string;
-		xUserId: string;
-		xUser: {
-			userId: string;
-			name: string;
-			profileImage: string;
-			followersCount: number;
-			followingCount: number;
-		};
-		text: string;
-		mediaDetails: string[];
-		createdAt: number;
-		likeCount: number;
-		repostCount: number;
-		impressionCount: number;
-	};
+	export let post: Post;
 
 	function formatDate(timestamp: number) {
 		const date = new Date(timestamp);
