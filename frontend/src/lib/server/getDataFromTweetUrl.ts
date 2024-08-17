@@ -18,5 +18,8 @@ type Data = Array<{
 
 export default async function getDataFromTweetUrl(url: string): Promise<Data> {
   const urls = await extractUrlsFromTweetUrl(url);
+
+  // TODO: invoke BirdXplorer API to get posts with these URLs
+
   return urls.map((url) => ({ url }));
 }
