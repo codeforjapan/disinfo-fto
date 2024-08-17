@@ -1,3 +1,4 @@
+import getDataFromTweetUrl from '$lib/server/getDataFromTweetUrl';
 import { fail } from '@sveltejs/kit';
 
 export const actions = {
@@ -9,8 +10,7 @@ export const actions = {
                 message: 'Invalid URL'
             })
         }
-        return {
-            url: url
-        }
+        const data = await getDataFromTweetUrl(url);
+        return data
     }
 }
