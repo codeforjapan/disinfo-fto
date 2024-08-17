@@ -1,16 +1,8 @@
 <script lang="ts">
+	import { formatDate } from "$lib";
 	import type { Post } from "$lib/types";
 
 	export let post: Post;
-
-	function formatDate(timestamp: number) {
-		const date = new Date(timestamp);
-		return date.toLocaleDateString();
-	}
-
-	function formatNumber(num: number) {
-		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
 </script>
 
 <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
@@ -57,9 +49,9 @@
 		</div>
 
 		<div class="flex justify-between text-sm font-medium">
-			<span class="text-pink-600">♥ {formatNumber(post.likeCount)}</span>
-			<span class="text-green-600">↻ {formatNumber(post.repostCount)}</span>
-			<span class="text-blue-600">👁 {formatNumber(post.impressionCount)}</span>
+			<span class="text-pink-600">♥ {post.likeCount}</span>
+			<span class="text-green-600">↻ {post.repostCount}</span>
+			<span class="text-blue-600">👁 {post.impressionCount}</span>
 		</div>
 	</div>
 </div>

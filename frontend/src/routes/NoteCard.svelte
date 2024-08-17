@@ -1,12 +1,8 @@
 <script lang="ts">
+	import { formatDate } from '$lib';
 	import type { Note } from '$lib/types';
 
 	export let note: Note;
-
-	function formatDate(timestamp: number) {
-		const date = new Date(timestamp);
-		return date.toLocaleDateString();
-	}
 </script>
 
 <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
@@ -65,6 +61,7 @@
 								clip-rule="evenodd"
 							/>
 						</svg>
+                        <!-- since the key is unknown, we pick the first key and its value -->
 						{topic.label[Object.keys(topic.label)[0]]}
 					</span>
 				{/each}
