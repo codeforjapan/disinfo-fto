@@ -1,4 +1,4 @@
-type Note = {
+export type Note = {
     noteId: string;
     postId: string;
     language: string;
@@ -13,7 +13,7 @@ type Note = {
     createdAt: number;
 };
 
-type Post = {
+export type Post = {
     postId: string;
     xUserId: string;
     xUser: {

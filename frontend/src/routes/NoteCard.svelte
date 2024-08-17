@@ -1,5 +1,8 @@
 <script lang="ts">
+	import type { Note } from '$lib/types';
+
 	export let note: Note;
+
 	function formatDate(timestamp: number) {
 		const date = new Date(timestamp);
 		return date.toLocaleDateString();
