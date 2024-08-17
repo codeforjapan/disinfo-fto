@@ -1,3 +1,6 @@
+const BIRDXPLORER_API_URL = 'https://birdxplorer.onrender.com';
+const POST_PATH = '/api/v1/data/posts';
+
 /**
  * Fetch tweet content from Twitter oEmbed API and extract URLs inside the tweet.
  * External URLs are using t.co as host.
@@ -12,15 +15,27 @@ async function extractUrlsFromTweetUrl(tweetUrl: string): Promise<string[]> {
 	return allUrls.map((m) => m[1]).filter((url) => url.startsWith('https://t.co/'));
 }
 
-type Data = Array<{
+type PostWithUrl = {
 	url: string;
-	// TODO: Define the rest of the data structure
-}>;
+	/** The post that contains the url */
+	post: any;
+};
 
-export default async function getDataFromTweetUrl(url: string): Promise<Data> {
+export default async function getDataFromTweetUrl(url: string): Promise<PostWithUrl[]> {
 	const urls = await extractUrlsFromTweetUrl(url);
 
-	// TODO: invoke BirdXplorer API to get posts with these URLs
-
-	return urls.map((url) => ({ url }));
+	return Promise.all(
+		urls.map(async (url) => {
+			const payload = {
+				search_text: url
+			};
+			const posts = await (await fetch(
+				`${BIRDXPLORER_API_URL}${POST_PATH}?${new URLSearchParams(payload)}`,
+				{
+					method: 'GET'
+				}
+			)).json();
+			return posts.map((post) => ({ url, post }));
+		})
+	);
 }
