@@ -2,8 +2,7 @@ import getDataFromTweetUrl from '$lib/server/getDataFromTweetUrl';
 import { fail } from '@sveltejs/kit';
 
 // sample data
-const sampleNote = { "noteId": "1814294699265651101", "postId": "1813861500261679581", "language": "ja", "topics": [{ "topicId": 28, "label": { "ja": "人権", "en": "Humanrights" }, "referenceCount": 4835 }, { "topicId": 53, "label": { "ja": "交通", "en": "mobility" }, "referenceCount": 320 }, { "topicId": 54, "label": { "ja": "観光", "en": "travel" }, "referenceCount": 426 }], "summary": "このアカウントは青春18きっぷ廃止説をデッチ上げた人物です。鉄道以外の交通機関、駐車場、宿泊パックなどの背景を伏せたまま意見を誘導するあくどい輩なので、通報が推奨です。https://www.hinatazaka46.com/s/official/page/hinata_fes2024", "createdAt": 1721396538928 }
-const samplePosts = [{ "postId": "1578923456789012345", "xUserId": "2345678901234567890", "xUser": { "userId": "2345678901234567890", "name": "山田花子", "profileImage": "https://pbs.twimg.com/profile_images/2345678901234567890/hanako_yamada_normal.jpg", "followersCount": 3456, "followingCount": 1234 }, "text": "発砲事件 安倍さんの時\n複数の発砲音 耳のあたり\n大谷翔平が安倍さんのこと ホモよ\nシンゾー クソモラシタネ ゲリジル\n耳の付近トランプ大統領候補演説会場\nバイデン支持者シークレットサービス   また\n拳突き上げ東部ペンシルベニア州あと数センチ  んぽ\n耳のあたり けがの可能性 自作自演trump vqp", "mediaDetails": ["https://pbs.twimg.com/media/BeautifulSunset1.jpg", "https://pbs.twimg.com/media/BeautifulSunset2.jpg"], "createdAt": 1691234567000, "likeCount": 789, "repostCount": 123, "impressionCount": 5678 }, { "postId": "1687654321098765432", "xUserId": "3456789012345678901", "xUser": { "userId": "3456789012345678901", "name": "陳美麗", "profileImage": "https://pbs.twimg.com/profile_images/3456789012345678901/meili_chen_normal.jpg", "followersCount": 8901, "followingCount": 2345 }, "text": "今天去了九份老街，真是太有趣了！古色古香的街道和美食讓人流連忘返。大家有機會一定要來看看喔！#九份#台灣旅遊", "mediaDetails": ["https://pbs.twimg.com/media/JiufenStreet1.jpg", "https://pbs.twimg.com/media/JiufenFood1.jpg"], "createdAt": 1698765432000, "likeCount": 1234, "repostCount": 456, "impressionCount": 9012 }]
+const samplePosts = [{ "postId": "1812272491978797094", "xUserId": "4890497530", "xUser": { "userId": "4890497530", "name": "Rupendartarar", "profileImage": "https://pbs.twimg.com/profile_images/1785887295977189376/sq8lJCWP_normal.jpg", "followersCount": 3839, "followingCount": 3339 }, "text": "発砲事件安倍さんの時\n複数の発砲音耳のあたり\n大谷翔平が安倍さんのことホモよ\nシンゾークソモラシタネゲリジル\n耳の付近トランプ大統領候補演説会場\nバイデン支持者シークレットサービスまた\n拳突き上げ東部ペンシルベニア州あと数センチんぽ\n耳のあたりけがの可能性自作自演trumpvqp", "mediaDetails": null, "createdAt": 1720914407000, "likeCount": 0, "repostCount": 0, "impressionCount": 2577 }, { "postId": "1812251983363096729", "xUserId": "1153082774166761472", "xUser": { "userId": "1153082774166761472", "name": "MoeFukada", "profileImage": "https://pbs.twimg.com/profile_images/1771433393273843712/m4e8n1Ts_normal.jpg", "followersCount": 108614, "followingCount": 2 }, "text": "トランプ前大統領\n銃声のあと、首を押されて倒れる。ＳＰが心臓マッサージを始める様子が見える。\nそれ以上は分からない。https://t.co/ggRQSe052J", "mediaDetails": null, "createdAt": 1720909517000, "likeCount": 3062, "repostCount": 961, "impressionCount": 7777157 }]
 
 export const actions = {
     default: async ({ request }) => {
@@ -21,7 +20,6 @@ export const actions = {
         return {
             success: true,
             data,
-            notes: Array.from({ length: 2 }, (_, i) => (sampleNote)),
             posts: samplePosts
         }
     }

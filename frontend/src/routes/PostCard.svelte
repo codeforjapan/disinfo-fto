@@ -1,7 +1,23 @@
 <script lang="ts">
-	import type { Post } from "$lib/types";
+	import type { Note, Post } from "$lib/types";
+    import { Accordion } from "bits-ui";
+	import { slide } from "svelte/transition";
+	import NoteCard from "./NoteCard.svelte";
 
 	export let post: Post;
+    let notes: Note[] | null = null;
+
+    async function fetchNotes(postId: string) {
+        const res = await fetch(`/api/posts/${postId}/notes`);
+        notes = (await res.json()).notes;
+        return notes as Note[];
+    }
+
+    async function onValueChange(value: string | string[] | undefined) {
+        if (value == 'main' && !notes) {
+            notes = await fetchNotes(post.postId);
+        }
+    }
 
 	function formatDate(timestamp: number) {
 		const date = new Date(timestamp);
@@ -13,7 +29,7 @@
 	}
 </script>
 
-<div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
+<div class="max-w-xs sm:max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
 	<div class="p-6">
 		<div class="mb-4 flex items-center space-x-3">
 			<img src={post.xUser.profileImage} alt={post.xUser.name} class="h-12 w-12 rounded-full" />
@@ -62,4 +78,37 @@
 			<span class="text-blue-600">👁 {formatNumber(post.impressionCount)}</span>
 		</div>
 	</div>
+    <Accordion.Root class="w-full" {onValueChange}>
+        <Accordion.Item value="main" class="group border-b border-dark-10 px-1.5">
+        <Accordion.Header>
+            <Accordion.Trigger
+                class="flex w-full flex-1 items-center justify-between pl-2 py-5 text-[15px] font-medium transition-all [&[data-state=open]>span>svg]:rotate-180 "
+            >
+                Show Notes
+            <span
+                class="inline-flex size-8 items-center justify-center rounded-[7px] bg-transparent transition-all hover:bg-dark-10"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+            </Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content
+            transition={slide}
+            transitionConfig={{ duration: 200 }}
+            class="pb-[25px] text-sm tracking-[-0.01em]"
+        >
+            {#if !notes}
+                <div class="flex justify-center" aria-label="loading">
+                    <div class="animate-spin h-8 w-8 bg-blue-300 rounded-xl"></div>
+                </div>
+            {:else if !notes.length}
+                No notes found
+            {:else}
+                {#each notes as note}
+                    <NoteCard {note} />
+                {/each}
+            {/if}
+        </Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>
 </div>
