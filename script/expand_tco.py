@@ -20,7 +20,7 @@ def get_redirect_url(short_url):
 # load previous file if exists
 cache = {}
 try:
-    with open('expanded_urls.csv', mode='r') as file:
+    with open('script/expanded_urls.csv', mode='r') as file:
         reader = csv.reader(file)
         next(reader)  # ヘッダーをスキップ
         for row in reader:
@@ -30,7 +30,6 @@ try:
             cache[tco_url] = redirect_url
 except FileNotFoundError:
     # ファイルが存在しない場合は、新しい辞書を作成
-    print("cache_output.csv が見つかりません。新しいキャッシュを作成します。")
     cache = {}
 
 
@@ -50,17 +49,18 @@ with ThreadPoolExecutor(max_workers=None) as executor:  # スレッド数を調�
             for tco_url in tco_urls:
                 if tco_url not in cache:
                     futures.append(executor.submit(get_redirect_url, tco_url))
-    print(len(futures))
+    to_do = len(futures)
+    already_done = len(cache)
 
     for future in as_completed(futures):
         tco_url, redirect_url = future.result()
         cache[tco_url] = redirect_url
         print(tco_url, redirect_url)
-        print(f"{len(cache)} / {len(futures)}  ({int(perf_counter() - t)} sec)")
+        print(f"{len(cache) - already_done} / {to_do}  ({int(perf_counter() - t)} sec)")
 
 print(perf_counter() - t)
 
-with open('expanded_urls.csv', mode='w', newline='') as file:
+with open('script/expanded_urls.csv', mode='w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["tco_url", "redirect_url"])  # ヘッダーを書き込む
     for tco_url, redirect_url in sorted(cache.items()):

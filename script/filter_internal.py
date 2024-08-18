@@ -2,7 +2,7 @@ import csv
 
 
 cache = {}
-with open('expanded_urls.csv', mode='r') as file:
+with open('script/expanded_urls.csv', mode='r') as file:
     reader = csv.reader(file)
     next(reader)  # ヘッダーをスキップ
     for row in reader:
@@ -22,7 +22,7 @@ reverse_map = {}
 for k, v in cache.items():
     reverse_map[v] = k
 
-with open('reverse_map.csv', mode='w') as file:
+with open('script/reverse_map.csv', mode='w') as file:
     writer = csv.writer(file)
     writer.writerow(["redirect_url", "tco_url"])  # ヘッダーを書き込む
     for k, v in sorted(reverse_map.items()):
