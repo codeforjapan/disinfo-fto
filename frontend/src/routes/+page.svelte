@@ -1,9 +1,11 @@
 <script lang="ts">
+    import { dev } from '$app/environment'
 	import { enhance } from '$app/forms';
 	import NoteCard from './NoteCard.svelte';
 	import PostCard from './PostCard.svelte';
 
 	export let form;
+    let submitting = false;
 
 	const validateUrl = (url: string): boolean => {
         const regex = /^https:\/\/(twitter|x)\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+/;
@@ -23,6 +25,7 @@
 			method="post"
 			class="mt-8 space-y-6"
 			use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+                submitting = true;
                 // https://kit.svelte.dev/docs/form-actions#progressive-enhancement-customising-use-enhance
 
 				if (!validateUrl(String(formData.get('url')))) {
@@ -32,6 +35,7 @@
                     }
 				}
 				return async ({ result, update }) => {
+                    submitting = false;
 					if (result.type === 'success') {
 						update({
                             // input url won't be cleared
@@ -69,12 +73,20 @@
 
 	</div>
 
+    {#if submitting}
+        <div class="flex justify-center" aria-label="loading">
+            <div class="animate-spin h-8 w-8 bg-blue-300 rounded-xl"></div>
+        </div>
+    {/if}
+
     {#if form}
         {#if form.success}
-            <p class="mr-auto">JSON.stringify(form.data)</p>
-            <div class="border-2 border-gray-300 p-4 w-full">
-                {JSON.stringify(form.data)}
-            </div>
+            {#if dev}
+                <p class="mr-auto">JSON.stringify(form.data)</p>
+                <div class="border-2 border-gray-300 p-4 w-full">
+                    {JSON.stringify(form.data)}
+                </div>
+            {/if}
             <div class="flex space-x-3 flex-col sm:flex-row">
                 {#if form.data?.length}
                     <div class="flex flex-col space-y-2 w-full">
@@ -83,6 +95,8 @@
                             <PostCard post={postWithUrl.post} />
                         {/each}
                     </div>
+                {:else}
+                    No posts found
                 {/if}
             </div>
         {/if}
