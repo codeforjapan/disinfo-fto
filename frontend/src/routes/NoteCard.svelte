@@ -5,7 +5,7 @@
 	export let note: Note;
 </script>
 
-<div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
+<div class="w-full overflow-hidden rounded-lg bg-white shadow-lg">
 	<div class="p-6">
 		<div class="mb-4 flex items-center justify-between">
 			<div class="flex items-center space-x-2">

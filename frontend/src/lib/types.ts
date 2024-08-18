@@ -24,7 +24,7 @@ export type Post = {
         followingCount: number;
     };
     text: string;
-    mediaDetails: string[];
+    mediaDetails: string[] | null;
     createdAt: number;
     likeCount: number;
     repostCount: number;
