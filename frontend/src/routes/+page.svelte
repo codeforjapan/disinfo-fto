@@ -73,12 +73,14 @@
                 {JSON.stringify(form.data)}
             </div>
             <div class="flex space-x-3 flex-col sm:flex-row">
-                <div class="flex flex-col space-y-2 w-full">
-                    <h2 class="text-2xl font-semibold text-gray-800">Posts</h2>
-                    {#each form.posts as post}
-                        <PostCard {post} />
-                    {/each}
-                </div>
+                {#if form.data?.length}
+                    <div class="flex flex-col space-y-2 w-full">
+                        <h2 class="text-2xl font-semibold text-gray-800">Posts</h2>
+                        {#each form.data as postWithUrl}
+                            <PostCard post={postWithUrl.post} />
+                        {/each}
+                    </div>
+                {/if}
             </div>
         {/if}
     {/if}
