@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { formatDate } from '$lib';
+	import Share from '$lib/components/Share.svelte';
 	import type { Note } from '$lib/types';
 
 	export let note: Note;
@@ -72,5 +73,6 @@
 			<span>Note ID: {note.noteId}</span>
 			<span>Post ID: {note.postId}</span>
 		</div>
+        <Share url={`https://x.com/i/birdwatch/n/${note.noteId}`} title="BirdXplorer Note" />
 	</div>
 </div>
