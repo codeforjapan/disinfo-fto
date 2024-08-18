@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatDate } from "$lib";
 	import type { Note, Post } from "$lib/types";
     import { Accordion } from "bits-ui";
 	import { slide } from "svelte/transition";
@@ -18,15 +19,6 @@
             notes = await fetchNotes(post.postId);
         }
     }
-
-	function formatDate(timestamp: number) {
-		const date = new Date(timestamp);
-		return date.toLocaleDateString();
-	}
-
-	function formatNumber(num: number) {
-		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
 </script>
 
 <div class="max-w-xs sm:max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
@@ -73,9 +65,9 @@
 		</div>
 
 		<div class="flex justify-between text-sm font-medium">
-			<span class="text-pink-600">♥ {formatNumber(post.likeCount)}</span>
-			<span class="text-green-600">↻ {formatNumber(post.repostCount)}</span>
-			<span class="text-blue-600">👁 {formatNumber(post.impressionCount)}</span>
+			<span class="text-pink-600">♥ {post.likeCount}</span>
+			<span class="text-green-600">↻ {post.repostCount}</span>
+			<span class="text-blue-600">👁 {post.impressionCount}</span>
 		</div>
 	</div>
     <Accordion.Root class="w-full" {onValueChange}>
